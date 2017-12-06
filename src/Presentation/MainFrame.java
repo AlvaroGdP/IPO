@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.border.BevelBorder;
+import java.awt.Component;
 
 public class MainFrame {
 
@@ -27,14 +28,15 @@ public class MainFrame {
 	private JLabel lblUltimoAcceso;
 	private JLabel lblUltimoAcceso_1;
 	private JButton btnModificarDatosPersonales;
-	private JSplitPane splitPane;
+	private JPanel pnlVentanaProyectos;
+	private JPanel pnlVentanaInfo;
 	private JPanel pnlProyectos;
 	private JPanel pnlInformacion;
-	private JSplitPane splitPane_1;
+	private JLabel lblEspaciadora2;
+	private JLabel lblEspaciadora;
+	private JLabel lblEspaciadora3;
 	private JPanel pnlUsuarios;
-	private JPanel pnlMensajes;
-	private JPanel panel;
-	private JPanel panel_1;
+	private JPanel pnlEnviarMensaje;
 
 	/**
 	 * Launch the application.
@@ -65,23 +67,30 @@ public class MainFrame {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setLocation(new Point(1, 1));
-		frame.setMinimumSize(new Dimension(1200, 700));
+		frame.setMinimumSize(new Dimension(1300, 2000));
 		frame.getContentPane().setMinimumSize(new Dimension(2147483647, 2147483647));
 		frame.setBounds(100, 100, 660, 386);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{62, 0, 0, 0, 0, 341, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{307, 107, 0, 0, 0, 130, 352, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 1285, 352, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
+		
+		lblEspaciadora = new JLabel("     ");
+		GridBagConstraints gbc_lblEspaciadora = new GridBagConstraints();
+		gbc_lblEspaciadora.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora.gridx = 0;
+		gbc_lblEspaciadora.gridy = 0;
+		frame.getContentPane().add(lblEspaciadora, gbc_lblEspaciadora);
 		
 		lblLblhome = new JLabel("lblHome");
 		GridBagConstraints gbc_lblLblhome = new GridBagConstraints();
 		gbc_lblLblhome.gridheight = 2;
 		gbc_lblLblhome.insets = new Insets(0, 0, 5, 5);
 		gbc_lblLblhome.gridx = 0;
-		gbc_lblLblhome.gridy = 0;
+		gbc_lblLblhome.gridy = 1;
 		frame.getContentPane().add(lblLblhome, gbc_lblLblhome);
 		
 		lblUsuario = new JLabel("Usuario:");
@@ -89,89 +98,111 @@ public class MainFrame {
 		gbc_lblUsuario.anchor = GridBagConstraints.WEST;
 		gbc_lblUsuario.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUsuario.gridx = 1;
-		gbc_lblUsuario.gridy = 0;
+		gbc_lblUsuario.gridy = 1;
 		frame.getContentPane().add(lblUsuario, gbc_lblUsuario);
 		
 		lblUsuario_1 = new JLabel("Usuario");
 		GridBagConstraints gbc_lblUsuario_1 = new GridBagConstraints();
 		gbc_lblUsuario_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUsuario_1.gridx = 2;
-		gbc_lblUsuario_1.gridy = 0;
+		gbc_lblUsuario_1.gridy = 1;
 		frame.getContentPane().add(lblUsuario_1, gbc_lblUsuario_1);
+		
+		lblEspaciadora3 = new JLabel("       ");
+		GridBagConstraints gbc_lblEspaciadora3 = new GridBagConstraints();
+		gbc_lblEspaciadora3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora3.gridx = 3;
+		gbc_lblEspaciadora3.gridy = 1;
+		frame.getContentPane().add(lblEspaciadora3, gbc_lblEspaciadora3);
+		
+		btnModificarDatosPersonales = new JButton("Modificar datos personales");
+		GridBagConstraints gbc_btnModificarDatosPersonales = new GridBagConstraints();
+		gbc_btnModificarDatosPersonales.gridheight = 2;
+		gbc_btnModificarDatosPersonales.insets = new Insets(0, 0, 5, 5);
+		gbc_btnModificarDatosPersonales.gridx = 4;
+		gbc_btnModificarDatosPersonales.gridy = 1;
+		frame.getContentPane().add(btnModificarDatosPersonales, gbc_btnModificarDatosPersonales);
 		
 		lblUltimoAcceso = new JLabel("Último Acceso:");
 		GridBagConstraints gbc_lblUltimoAcceso = new GridBagConstraints();
 		gbc_lblUltimoAcceso.anchor = GridBagConstraints.WEST;
 		gbc_lblUltimoAcceso.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUltimoAcceso.gridx = 1;
-		gbc_lblUltimoAcceso.gridy = 1;
+		gbc_lblUltimoAcceso.gridy = 2;
 		frame.getContentPane().add(lblUltimoAcceso, gbc_lblUltimoAcceso);
 		
 		lblUltimoAcceso_1 = new JLabel("ultimo acceso");
 		GridBagConstraints gbc_lblUltimoAcceso_1 = new GridBagConstraints();
 		gbc_lblUltimoAcceso_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUltimoAcceso_1.gridx = 2;
-		gbc_lblUltimoAcceso_1.gridy = 1;
+		gbc_lblUltimoAcceso_1.gridy = 2;
 		frame.getContentPane().add(lblUltimoAcceso_1, gbc_lblUltimoAcceso_1);
 		
-		btnModificarDatosPersonales = new JButton("Modificar datos personales");
-		GridBagConstraints gbc_btnModificarDatosPersonales = new GridBagConstraints();
-		gbc_btnModificarDatosPersonales.gridheight = 2;
-		gbc_btnModificarDatosPersonales.insets = new Insets(0, 0, 5, 5);
-		gbc_btnModificarDatosPersonales.gridx = 3;
-		gbc_btnModificarDatosPersonales.gridy = 0;
-		frame.getContentPane().add(btnModificarDatosPersonales, gbc_btnModificarDatosPersonales);
-		
-		splitPane = new JSplitPane();
-		splitPane.setMinimumSize(new Dimension(300, 400));
-		GridBagConstraints gbc_splitPane = new GridBagConstraints();
-		gbc_splitPane.gridheight = 3;
-		gbc_splitPane.gridwidth = 6;
-		gbc_splitPane.insets = new Insets(0, 0, 0, 5);
-		gbc_splitPane.fill = GridBagConstraints.BOTH;
-		gbc_splitPane.gridx = 0;
-		gbc_splitPane.gridy = 3;
-		frame.getContentPane().add(splitPane, gbc_splitPane);
+		lblEspaciadora2 = new JLabel("             ");
+		GridBagConstraints gbc_lblEspaciadora2 = new GridBagConstraints();
+		gbc_lblEspaciadora2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora2.gridx = 0;
+		gbc_lblEspaciadora2.gridy = 3;
+		frame.getContentPane().add(lblEspaciadora2, gbc_lblEspaciadora2);
 		
 		pnlProyectos = new JPanel();
-		pnlProyectos.setMinimumSize(new Dimension(275, 10));
-		pnlProyectos.setBorder(new TitledBorder(null, "Proyectos y tareas", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
-		splitPane.setLeftComponent(pnlProyectos);
+		pnlProyectos.setBorder(new TitledBorder(null, "Proyectos y Tareas", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		GridBagConstraints gbc_pnlProyectos = new GridBagConstraints();
+		gbc_pnlProyectos.gridheight = 4;
+		gbc_pnlProyectos.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlProyectos.fill = GridBagConstraints.BOTH;
+		gbc_pnlProyectos.gridx = 0;
+		gbc_pnlProyectos.gridy = 4;
+		frame.getContentPane().add(pnlProyectos, gbc_pnlProyectos);
 		
-		panel = new VentanaProyectos();
-		panel.setBorder(null);
-		panel.setPreferredSize(new Dimension(250, 560));
-		panel.setMinimumSize(new Dimension(500, 1500));
-		pnlProyectos.add(panel);
+		pnlVentanaProyectos = new VentanaProyectos();
+		pnlVentanaProyectos.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pnlProyectos.add(pnlVentanaProyectos);
+		pnlVentanaProyectos.setBorder(null);
+		pnlVentanaProyectos.setPreferredSize(new Dimension(250, 560));
+		pnlVentanaProyectos.setMinimumSize(new Dimension(185, 1800));
 		
 		pnlInformacion = new JPanel();
-		pnlInformacion.setMinimumSize(new Dimension(150, 10));
-		pnlInformacion.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informaci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		splitPane.setRightComponent(pnlInformacion);
+		pnlInformacion.setMaximumSize(new Dimension(3000, 3000));
+		pnlInformacion.setMinimumSize(new Dimension(320, 1500));
+		pnlInformacion.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Informaci\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
+		GridBagConstraints gbc_pnlInformacion = new GridBagConstraints();
+		gbc_pnlInformacion.gridheight = 7;
+		gbc_pnlInformacion.gridwidth = 5;
+		gbc_pnlInformacion.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlInformacion.fill = GridBagConstraints.BOTH;
+		gbc_pnlInformacion.gridx = 1;
+		gbc_pnlInformacion.gridy = 4;
+		frame.getContentPane().add(pnlInformacion, gbc_pnlInformacion);
 		
-		panel_1 = new VentanaInfo();
-		panel_1.setMinimumSize(new Dimension(465, 600));
-		pnlInformacion.add(panel_1);
-		
-		splitPane_1 = new JSplitPane();
-		splitPane_1.setPreferredSize(new Dimension(217, 500));
-		splitPane_1.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		GridBagConstraints gbc_splitPane_1 = new GridBagConstraints();
-		gbc_splitPane_1.insets = new Insets(0, 0, 5, 5);
-		gbc_splitPane_1.fill = GridBagConstraints.BOTH;
-		gbc_splitPane_1.gridx = 6;
-		gbc_splitPane_1.gridy = 3;
-		frame.getContentPane().add(splitPane_1, gbc_splitPane_1);
+		pnlVentanaInfo = new VentanaInfo();
+		GridBagLayout gbl_pnlVentanaInfo = (GridBagLayout) pnlVentanaInfo.getLayout();
+		gbl_pnlVentanaInfo.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 124, 0};
+		gbl_pnlVentanaInfo.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+		pnlInformacion.add(pnlVentanaInfo);
+		pnlVentanaInfo.setMinimumSize(new Dimension(400, 1800));
 		
 		pnlUsuarios = new JPanel();
-		pnlUsuarios.setBorder(new TitledBorder(null, "Usuarios", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlUsuarios.setMinimumSize(new Dimension(10, 150));
-		splitPane_1.setLeftComponent(pnlUsuarios);
+		pnlUsuarios.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Usuarios", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		GridBagConstraints gbc_pnlUsuarios = new GridBagConstraints();
+		gbc_pnlUsuarios.gridheight = 2;
+		gbc_pnlUsuarios.gridwidth = 2;
+		gbc_pnlUsuarios.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlUsuarios.fill = GridBagConstraints.BOTH;
+		gbc_pnlUsuarios.gridx = 6;
+		gbc_pnlUsuarios.gridy = 4;
+		frame.getContentPane().add(pnlUsuarios, gbc_pnlUsuarios);
 		
-		pnlMensajes = new JPanel();
-		pnlMensajes.setBorder(new TitledBorder(null, "Mensajes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlMensajes.setMinimumSize(new Dimension(10, 150));
-		splitPane_1.setRightComponent(pnlMensajes);
+		pnlEnviarMensaje = new JPanel();
+		pnlEnviarMensaje.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Enviar Mensaje", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		GridBagConstraints gbc_pnlEnviarMensaje = new GridBagConstraints();
+		gbc_pnlEnviarMensaje.gridwidth = 2;
+		gbc_pnlEnviarMensaje.gridheight = 6;
+		gbc_pnlEnviarMensaje.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlEnviarMensaje.fill = GridBagConstraints.BOTH;
+		gbc_pnlEnviarMensaje.gridx = 6;
+		gbc_pnlEnviarMensaje.gridy = 6;
+		frame.getContentPane().add(pnlEnviarMensaje, gbc_pnlEnviarMensaje);
 	}
 
 }
