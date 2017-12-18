@@ -10,7 +10,16 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+
+import Domain.Proyecto;
+import Hardcode.Hardcode;
+
+import Presentation.VentanaInfo;
+
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.TreeSelectionEvent;
 
 public class VentanaProyectos extends JPanel {
 	private JButton btnAnadirProyecto;
@@ -19,10 +28,15 @@ public class VentanaProyectos extends JPanel {
 	private JScrollPane scrollPane;
 	private JTree tree;
 
+	private JPanel pnlInfo;
+	private Hardcode hc;
+	
 	/**
 	 * Create the panel.
 	 */
-	public VentanaProyectos() {
+	public VentanaProyectos(Hardcode hc, JPanel pnlInfo) {
+		this.pnlInfo = pnlInfo;
+		this.hc = hc;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 67, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
@@ -39,26 +53,7 @@ public class VentanaProyectos extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 		
-		tree = new JTree();
-		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Proyectos") {
-				{
-					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("Proyecto_1");
-						node_1.add(new DefaultMutableTreeNode("Tarea_1"));
-						node_1.add(new DefaultMutableTreeNode("Tarea_2"));
-						node_1.add(new DefaultMutableTreeNode("Tarea_3"));
-						node_1.add(new DefaultMutableTreeNode("Tarea_4"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Proyecto_2");
-						node_1.add(new DefaultMutableTreeNode("Tarea_1"));
-						node_1.add(new DefaultMutableTreeNode("Tarea_2"));
-						node_1.add(new DefaultMutableTreeNode("Tarea_3"));
-					add(node_1);
-				}
-			}
-		));
-		scrollPane.setViewportView(tree);
+		createTree();
 		
 		btnAnadirProyecto = new JButton("Añadir Proyecto");
 		GridBagConstraints gbc_btnAnadirProyecto = new GridBagConstraints();
@@ -69,7 +64,7 @@ public class VentanaProyectos extends JPanel {
 		add(btnAnadirProyecto, gbc_btnAnadirProyecto);
 		
 		btnAnadirTatea = new JButton("Añadir Tarea");
-		btnAnadirTatea.addActionListener(new BtnAnadirTateaActionListener());
+		btnAnadirTatea.addActionListener(new BtnAnadirTareaActionListener());
 		GridBagConstraints gbc_btnAnadirTatea = new GridBagConstraints();
 		gbc_btnAnadirTatea.anchor = GridBagConstraints.WEST;
 		gbc_btnAnadirTatea.gridwidth = 3;
@@ -85,11 +80,56 @@ public class VentanaProyectos extends JPanel {
 		gbc_btnBorrar.gridx = 0;
 		gbc_btnBorrar.gridy = 2;
 		add(btnBorrar, gbc_btnBorrar);
+		
+		
+		
 
 	}
 
-	private class BtnAnadirTateaActionListener implements ActionListener {
+	
+	
+	private class BtnAnadirTareaActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 		}
 	}
+	
+	private class TreeTreeSelectionListener implements TreeSelectionListener{
+		public void valueChanged(TreeSelectionEvent e) {
+			if (!tree.isSelectionEmpty()) {
+				
+				String nodo = (e.getPath().getLastPathComponent()).toString();
+				for (int i=0; i<hc.listaProyectos.size(); i++) {
+					for (int j=0; j<hc.listaProyectos.get(i).getTareas().size(); j++) {
+						if (nodo.equals(hc.listaProyectos.get(i).getTareas().get(j).getNombre())) {
+							((VentanaInfo) pnlInfo).updateValues(hc.listaProyectos.get(i).getTareas().get(j));
+						}
+					}
+				}
+				
+			}
+		}
+	}
+	
+	
+	public void createTree() {
+		tree = new JTree();
+		tree.addTreeSelectionListener(new TreeTreeSelectionListener());
+		tree.setModel(new DefaultTreeModel(
+			new DefaultMutableTreeNode("IPO") {
+				{
+					DefaultMutableTreeNode node_1;
+					for (int i=0; i<hc.listaProyectos.size();i++) {
+						node_1 = new DefaultMutableTreeNode(hc.listaProyectos.get(i).getNombre());
+						for (int j=0; j<hc.listaProyectos.get(i).getTareas().size(); j++) {
+							node_1.add(new DefaultMutableTreeNode (hc.listaProyectos.get(i).getTareas().get(j).getNombre()));
+						}
+						add(node_1);
+					}
+				}
+			}
+		));
+		scrollPane.setViewportView(tree);
+	}
+	
+	
 }

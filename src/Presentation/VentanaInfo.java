@@ -8,6 +8,7 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -19,45 +20,67 @@ import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
 
+import Domain.Tarea;
+import Hardcode.Hardcode;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class VentanaInfo extends JPanel {
 	private JLabel lblNombre;
-	private JTextField textField;
+	private JTextField tfNombre;
 	private JLabel lblResponsable;
 	private JLabel lblFechaInicio;
 	private JLabel lblFechaFin;
 	private JLabel lblPrioridad;
 	private JLabel lblEstado;
-	private JComboBox comboBox;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JComboBox comboBox_1;
-	private JComboBox comboBox_2;
+	private JComboBox cbResponsable;
+	private JTextField tfFechaInicio;
+	private JTextField tfFechaFin;
+	private JComboBox cbPrioridad;
+	private JComboBox cbEstado;
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane_1;
 	private JButton btnModificarEquipo;
 	private JButton btnGuardarCambios;
-	private JList lstEquipo;
 	private JLabel lblEspaciadora2;
 	private JLabel lblEspaciadora3;
 	private JLabel lblEspaciadora4;
-	private JLabel lblEspaciadora6;
 	private JLabel lblEspaciadora7;
 	private JLabel lblEspaciadora8;
 	private JLabel lblEquipo;
 	private JLabel lblEspaciadora9;
 	private JLabel lblDescripcion;
 	private JTextArea taDescripcion;
+	private JLabel lblEspaciadora10;
+	private JLabel lblEspaciadora11;
+	private JLabel lblEspaciadora12;
+	private JLabel lblEspaciadora13;
+	private JList lstEquipo;
 
+	
+	private Tarea actual;
+	private Hardcode hc;
+	
 	/**
 	 * Create the panel.
 	 */
-	public VentanaInfo() {
+	public VentanaInfo(Hardcode hc) {
+		
+		this.hc = hc;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{71, 182, 49, 230, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 33, 0, 0, 0, 0, 32, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 33, 0, 0, 0, 0, 0, 32, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
+		
+		lblEspaciadora10 = new JLabel("    ");
+		GridBagConstraints gbc_lblEspaciadora10 = new GridBagConstraints();
+		gbc_lblEspaciadora10.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora10.gridx = 0;
+		gbc_lblEspaciadora10.gridy = 0;
+		add(lblEspaciadora10, gbc_lblEspaciadora10);
 		
 		lblNombre = new JLabel("Nombre");
 		GridBagConstraints gbc_lblNombre = new GridBagConstraints();
@@ -67,14 +90,14 @@ public class VentanaInfo extends JPanel {
 		gbc_lblNombre.gridy = 2;
 		add(lblNombre, gbc_lblNombre);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		add(textField, gbc_textField);
-		textField.setColumns(10);
+		tfNombre = new JTextField();
+		GridBagConstraints gbc_tfNombre = new GridBagConstraints();
+		gbc_tfNombre.insets = new Insets(0, 0, 5, 5);
+		gbc_tfNombre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfNombre.gridx = 1;
+		gbc_tfNombre.gridy = 2;
+		add(tfNombre, gbc_tfNombre);
+		tfNombre.setColumns(10);
 		
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -101,13 +124,20 @@ public class VentanaInfo extends JPanel {
 		gbc_lblResponsable.gridy = 3;
 		add(lblResponsable, gbc_lblResponsable);
 		
-		comboBox = new JComboBox();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 3;
-		add(comboBox, gbc_comboBox);
+		cbResponsable = new JComboBox();
+		GridBagConstraints gbc_cbResponsable = new GridBagConstraints();
+		gbc_cbResponsable.insets = new Insets(0, 0, 5, 5);
+		gbc_cbResponsable.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbResponsable.gridx = 1;
+		gbc_cbResponsable.gridy = 3;
+		add(cbResponsable, gbc_cbResponsable);
+		
+		lblEspaciadora11 = new JLabel("    ");
+		GridBagConstraints gbc_lblEspaciadora11 = new GridBagConstraints();
+		gbc_lblEspaciadora11.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora11.gridx = 0;
+		gbc_lblEspaciadora11.gridy = 4;
+		add(lblEspaciadora11, gbc_lblEspaciadora11);
 		
 		lblEspaciadora2 = new JLabel("                    ");
 		GridBagConstraints gbc_lblEspaciadora2 = new GridBagConstraints();
@@ -124,15 +154,15 @@ public class VentanaInfo extends JPanel {
 		gbc_lblFechaInicio.gridy = 6;
 		add(lblFechaInicio, gbc_lblFechaInicio);
 		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.anchor = GridBagConstraints.SOUTH;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 6;
-		add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		tfFechaInicio = new JTextField();
+		GridBagConstraints gbc_tfFechaInicio = new GridBagConstraints();
+		gbc_tfFechaInicio.anchor = GridBagConstraints.SOUTH;
+		gbc_tfFechaInicio.insets = new Insets(0, 0, 5, 5);
+		gbc_tfFechaInicio.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfFechaInicio.gridx = 1;
+		gbc_tfFechaInicio.gridy = 6;
+		add(tfFechaInicio, gbc_tfFechaInicio);
+		tfFechaInicio.setColumns(10);
 		
 		lblFechaFin = new JLabel("Fecha fin");
 		GridBagConstraints gbc_lblFechaFin = new GridBagConstraints();
@@ -142,14 +172,21 @@ public class VentanaInfo extends JPanel {
 		gbc_lblFechaFin.gridy = 7;
 		add(lblFechaFin, gbc_lblFechaFin);
 		
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 7;
-		add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
+		tfFechaFin = new JTextField();
+		GridBagConstraints gbc_tfFechaFin = new GridBagConstraints();
+		gbc_tfFechaFin.insets = new Insets(0, 0, 5, 5);
+		gbc_tfFechaFin.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfFechaFin.gridx = 1;
+		gbc_tfFechaFin.gridy = 7;
+		add(tfFechaFin, gbc_tfFechaFin);
+		tfFechaFin.setColumns(10);
+		
+		lblEspaciadora13 = new JLabel("   ");
+		GridBagConstraints gbc_lblEspaciadora13 = new GridBagConstraints();
+		gbc_lblEspaciadora13.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora13.gridx = 2;
+		gbc_lblEspaciadora13.gridy = 8;
+		add(lblEspaciadora13, gbc_lblEspaciadora13);
 		
 		lblEspaciadora8 = new JLabel("     ");
 		GridBagConstraints gbc_lblEspaciadora8 = new GridBagConstraints();
@@ -158,52 +195,45 @@ public class VentanaInfo extends JPanel {
 		gbc_lblEspaciadora8.gridy = 9;
 		add(lblEspaciadora8, gbc_lblEspaciadora8);
 				
-				lblEspaciadora9 = new JLabel("     ");
-				GridBagConstraints gbc_lblEspaciadora9 = new GridBagConstraints();
-				gbc_lblEspaciadora9.insets = new Insets(0, 0, 5, 5);
-				gbc_lblEspaciadora9.gridx = 0;
-				gbc_lblEspaciadora9.gridy = 10;
-				add(lblEspaciadora9, gbc_lblEspaciadora9);
-				
-				scrollPane_1 = new JScrollPane();
-				GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-				gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
-				gbc_scrollPane_1.gridheight = 4;
-				gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
-				gbc_scrollPane_1.gridx = 3;
-				gbc_scrollPane_1.gridy = 10;
-				add(scrollPane_1, gbc_scrollPane_1);
-				
-				lblEquipo = new JLabel("Equipo");
-				lblEquipo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-				lblEquipo.setForeground(Color.BLUE);
-				lblEquipo.setBackground(Color.BLUE);
-				scrollPane_1.setColumnHeaderView(lblEquipo);
+		lblEspaciadora9 = new JLabel("     ");
+		GridBagConstraints gbc_lblEspaciadora9 = new GridBagConstraints();
+		gbc_lblEspaciadora9.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora9.gridx = 0;
+		gbc_lblEspaciadora9.gridy = 10;
+		add(lblEspaciadora9, gbc_lblEspaciadora9);
 		
-				
-				lblPrioridad = new JLabel("Prioridad");
-				GridBagConstraints gbc_lblPrioridad = new GridBagConstraints();
-				gbc_lblPrioridad.anchor = GridBagConstraints.EAST;
-				gbc_lblPrioridad.insets = new Insets(0, 0, 5, 5);
-				gbc_lblPrioridad.gridx = 0;
-				gbc_lblPrioridad.gridy = 11;
-				add(lblPrioridad, gbc_lblPrioridad);
+		scrollPane_1 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane_1.gridheight = 4;
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.gridx = 3;
+		gbc_scrollPane_1.gridy = 10;
+		add(scrollPane_1, gbc_scrollPane_1);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Alta", "Media", "Baja"}));
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.gridx = 1;
-		gbc_comboBox_1.gridy = 11;
-		add(comboBox_1, gbc_comboBox_1);
+		lblEquipo = new JLabel("Equipo");
+		lblEquipo.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		lblEquipo.setForeground(Color.BLUE);
+		lblEquipo.setBackground(Color.BLUE);
+		scrollPane_1.setColumnHeaderView(lblEquipo);
 		
-		lstEquipo = new JList();
-		GridBagConstraints gbc_lstEquipo = new GridBagConstraints();
-		gbc_lstEquipo.insets = new Insets(0, 0, 5, 0);
-		gbc_lstEquipo.gridx = 3;
-		gbc_lstEquipo.gridy = 11;
-		add(lstEquipo, gbc_lstEquipo);
+		
+		lblPrioridad = new JLabel("Prioridad");
+		GridBagConstraints gbc_lblPrioridad = new GridBagConstraints();
+		gbc_lblPrioridad.anchor = GridBagConstraints.EAST;
+		gbc_lblPrioridad.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPrioridad.gridx = 0;
+		gbc_lblPrioridad.gridy = 11;
+		add(lblPrioridad, gbc_lblPrioridad);
+		
+		cbPrioridad = new JComboBox();
+		cbPrioridad.setModel(new DefaultComboBoxModel(new String[] {"Alta", "Media", "Baja"}));
+		GridBagConstraints gbc_cbPrioridad = new GridBagConstraints();
+		gbc_cbPrioridad.insets = new Insets(0, 0, 5, 5);
+		gbc_cbPrioridad.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbPrioridad.gridx = 1;
+		gbc_cbPrioridad.gridy = 11;
+		add(cbPrioridad, gbc_cbPrioridad);
 		
 		lblEstado = new JLabel("Estado");
 		GridBagConstraints gbc_lblEstado = new GridBagConstraints();
@@ -213,14 +243,14 @@ public class VentanaInfo extends JPanel {
 		gbc_lblEstado.gridy = 12;
 		add(lblEstado, gbc_lblEstado);
 		
-		comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Activo", "Tardío", "Completo"}));
-		GridBagConstraints gbc_comboBox_2 = new GridBagConstraints();
-		gbc_comboBox_2.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_2.gridx = 1;
-		gbc_comboBox_2.gridy = 12;
-		add(comboBox_2, gbc_comboBox_2);
+		cbEstado = new JComboBox();
+		cbEstado.setModel(new DefaultComboBoxModel(new String[] {"Activo", "Tardío", "Completo"}));
+		GridBagConstraints gbc_cbEstado = new GridBagConstraints();
+		gbc_cbEstado.insets = new Insets(0, 0, 5, 5);
+		gbc_cbEstado.fill = GridBagConstraints.HORIZONTAL;
+		gbc_cbEstado.gridx = 1;
+		gbc_cbEstado.gridy = 12;
+		add(cbEstado, gbc_cbEstado);
 		
 		lblEspaciadora3 = new JLabel("     ");
 		GridBagConstraints gbc_lblEspaciadora3 = new GridBagConstraints();
@@ -236,36 +266,87 @@ public class VentanaInfo extends JPanel {
 		gbc_lblEspaciadora4.gridy = 15;
 		add(lblEspaciadora4, gbc_lblEspaciadora4);
 		
-		lblEspaciadora7 = new JLabel("       ");
-		GridBagConstraints gbc_lblEspaciadora7 = new GridBagConstraints();
-		gbc_lblEspaciadora7.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_lblEspaciadora7.insets = new Insets(0, 0, 5, 5);
-		gbc_lblEspaciadora7.gridx = 2;
-		gbc_lblEspaciadora7.gridy = 15;
-		add(lblEspaciadora7, gbc_lblEspaciadora7);
-		
 		btnModificarEquipo = new JButton("Modificar Equipo");
+		btnModificarEquipo.addActionListener(new BtnModificarEquipoActionListener());
 		GridBagConstraints gbc_btnModificarEquipo = new GridBagConstraints();
 		gbc_btnModificarEquipo.insets = new Insets(0, 0, 5, 0);
 		gbc_btnModificarEquipo.gridx = 3;
 		gbc_btnModificarEquipo.gridy = 15;
 		add(btnModificarEquipo, gbc_btnModificarEquipo);
 		
-		lblEspaciadora6 = new JLabel("       ");
-		GridBagConstraints gbc_lblEspaciadora6 = new GridBagConstraints();
-		gbc_lblEspaciadora6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblEspaciadora6.gridx = 2;
-		gbc_lblEspaciadora6.gridy = 16;
-		add(lblEspaciadora6, gbc_lblEspaciadora6);
+		lblEspaciadora7 = new JLabel("       ");
+		GridBagConstraints gbc_lblEspaciadora7 = new GridBagConstraints();
+		gbc_lblEspaciadora7.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_lblEspaciadora7.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora7.gridx = 2;
+		gbc_lblEspaciadora7.gridy = 16;
+		add(lblEspaciadora7, gbc_lblEspaciadora7);
+		
+		lblEspaciadora12 = new JLabel("   ");
+		GridBagConstraints gbc_lblEspaciadora12 = new GridBagConstraints();
+		gbc_lblEspaciadora12.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEspaciadora12.gridx = 0;
+		gbc_lblEspaciadora12.gridy = 17;
+		add(lblEspaciadora12, gbc_lblEspaciadora12);
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
 		GridBagConstraints gbc_btnGuardarCambios = new GridBagConstraints();
 		gbc_btnGuardarCambios.insets = new Insets(0, 0, 5, 0);
 		gbc_btnGuardarCambios.gridwidth = 3;
 		gbc_btnGuardarCambios.gridx = 1;
-		gbc_btnGuardarCambios.gridy = 17;
+		gbc_btnGuardarCambios.gridy = 18;
 		add(btnGuardarCambios, gbc_btnGuardarCambios);
+		
+		initializeResponsable();
 
 	}
+	
+	public void updateValues(Tarea actual) {
+		this.actual=actual;
+		tfNombre.setText(actual.getNombre());
+		tfFechaInicio.setText(actual.getFechaInicio());
+		tfFechaFin.setText(actual.getFechaFin());
+		taDescripcion.setText(actual.getDescripcion());
+		
+		switch (actual.getPrioridad()) {
+		case 0:
+			cbPrioridad.setSelectedIndex(actual.getPrioridad());
+		case 1:
+			cbPrioridad.setSelectedIndex(actual.getPrioridad());
+		case 2:
+			cbPrioridad.setSelectedIndex(actual.getPrioridad());
+		}
+		cbResponsable.setSelectedItem(actual.getResponsable().getNombre());
+		
+		switch (actual.getEstado()) {
+		case 0:
+			cbEstado.setSelectedIndex(actual.getEstado());
+		case 1:
+			cbEstado.setSelectedIndex(actual.getEstado());
+		case 2:
+			cbEstado.setSelectedIndex(actual.getEstado());
+		}
+		
 
+		DefaultListModel<String> model = new DefaultListModel<>();
+		lstEquipo = new JList(model);
+		for (int i=0; i<actual.getEquipo().size(); i++) {
+			model.addElement(actual.getEquipo().get(i).getNombre());
+		}
+		scrollPane_1.setViewportView(lstEquipo);
+			
+	}
+	
+	public void initializeResponsable() {
+		for (int i=0; i<hc.listaUsuarios.size(); i++) {
+			cbResponsable.addItem(hc.listaUsuarios.get(i).getNombre());
+		}
+	}
+
+	private class BtnModificarEquipoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			VentanaModificarEquipo newFrame = new VentanaModificarEquipo(actual, hc);
+			newFrame.setVisible(true);
+		}
+	}
 }
