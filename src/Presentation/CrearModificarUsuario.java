@@ -11,15 +11,21 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
 import Domain.Usuario;
+import Hardcode.Hardcode;
 
 import javax.swing.JScrollPane;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CrearModificarUsuario{
 
@@ -38,6 +44,13 @@ public class CrearModificarUsuario{
 	private JLabel lblImagen;
 	private JLabel lblEspaciadora;
 	private JLabel lblEspaciadora2;
+	
+	private Hardcode hc;
+	private Usuario usuarioActual;
+	private boolean nuevo; //Variable utilizada para saber si es necesario añadir un nuevo usuario al guardar o solo modificar el antiguo
+	private VentanaUsuarios vu;
+	
+	private ImageIcon imagen;
 
 	/**
 	 * Launch the application.
@@ -58,9 +71,13 @@ public class CrearModificarUsuario{
 	/**
 	 * Create the application.
 	 */
-	public CrearModificarUsuario(Usuario logged) {
+	public CrearModificarUsuario(Usuario current, boolean nuevo, Hardcode hc, VentanaUsuarios pnlVentanaUsuarios) {
+		this.usuarioActual=current;
+		this.nuevo = nuevo;
+		this.hc = hc;
+		this.vu = pnlVentanaUsuarios;
 		initialize();
-		leerDatos(logged);
+		leerDatos(current);
 	}
 	
 	public CrearModificarUsuario() {
@@ -179,6 +196,7 @@ public class CrearModificarUsuario{
 		tfDireccion.setColumns(10);
 		
 		btnModificarImagen = new JButton("Modificar Imagen");
+		btnModificarImagen.addActionListener(new BtnModificarImagenActionListener());
 		GridBagConstraints gbc_btnModificarImagen = new GridBagConstraints();
 		gbc_btnModificarImagen.insets = new Insets(0, 0, 0, 5);
 		gbc_btnModificarImagen.gridx = 1;
@@ -186,6 +204,7 @@ public class CrearModificarUsuario{
 		frame.getContentPane().add(btnModificarImagen, gbc_btnModificarImagen);
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.addActionListener(new BtnGuardarCambiosActionListener());
 		GridBagConstraints gbc_btnGuardarCambios = new GridBagConstraints();
 		gbc_btnGuardarCambios.insets = new Insets(0, 0, 0, 5);
 		gbc_btnGuardarCambios.gridx = 3;
@@ -194,14 +213,44 @@ public class CrearModificarUsuario{
 	}
 
 	public void leerDatos(Usuario logged) {
-		tfNombre.setText(logged.getNombre());
-		tfTelefono.setText(logged.getTelefono());
-		tfCorreo.setText(logged.getCorreo());
-		tfDireccion.setText(logged.getDireccion());
-		if (logged.getPath()!=null) {
-			//Imagen
+		try {
+			tfNombre.setText(logged.getNombre());
+			tfTelefono.setText(logged.getTelefono());
+			tfCorreo.setText(logged.getCorreo());
+			tfDireccion.setText(logged.getDireccion());
+			if (logged.getPath()!=null) {
+				Icon icon = new ImageIcon(usuarioActual.getPath());
+				lblImagen.setIcon(icon);
+			}
+		}catch (Exception e) {
+			
 		}
+		
 	}
 	
 	
+	private class BtnGuardarCambiosActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			usuarioActual.setNombre(tfNombre.getText());
+			usuarioActual.setCorreo(tfCorreo.getText());
+			usuarioActual.setTelefono(tfTelefono.getText());
+			usuarioActual.setDireccion(tfDireccion.getText());
+			if (nuevo) {
+				hc.listaUsuarios.add(usuarioActual);
+				vu.llenarLista();
+			}
+		}
+	}
+	private class BtnModificarImagenActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser fcAbrir = new JFileChooser();
+			int valorDevuelto = fcAbrir.showOpenDialog(frame);
+			if (valorDevuelto == JFileChooser.APPROVE_OPTION) {
+				File file = fcAbrir.getSelectedFile();
+				imagen = new ImageIcon(file.getAbsolutePath());
+				lblImagen.setIcon(imagen);
+				usuarioActual.setPath(file.getAbsolutePath());
+			}
+		}
+	}
 }

@@ -10,11 +10,15 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaMensaje extends JPanel {
 	private JScrollPane scrollPane;
 	private JTextArea taMensaje;
 	private JButton btnEnviarMensaje;
+	
+	private String destinatario;
 
 	/**
 	 * Create the panel.
@@ -45,6 +49,7 @@ public class VentanaMensaje extends JPanel {
 		scrollPane.setViewportView(taMensaje);
 		
 		btnEnviarMensaje = new JButton("Enviar Mensaje");
+		btnEnviarMensaje.addActionListener(new BtnEnviarMensajeActionListener());
 		GridBagConstraints gbc_btnEnviarMensaje = new GridBagConstraints();
 		gbc_btnEnviarMensaje.anchor = GridBagConstraints.EAST;
 		gbc_btnEnviarMensaje.gridx = 1;
@@ -52,5 +57,21 @@ public class VentanaMensaje extends JPanel {
 		add(btnEnviarMensaje, gbc_btnEnviarMensaje);
 
 	}
+	
+	public void setDestinatario(String destinatario) {
+		
+		this.destinatario = destinatario;
+	}
 
+	private class BtnEnviarMensajeActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (destinatario!=null) {
+				taMensaje.setText("Mensaje enviado a "+destinatario);
+				btnEnviarMensaje.setEnabled(true);
+			}else {
+				taMensaje.setText("Por favor, selecciona destinatario en la lista superior.");
+			}
+			
+		}
+	}
 }

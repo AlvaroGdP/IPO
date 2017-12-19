@@ -204,25 +204,6 @@ public class MainFrame{
 		pnlVentanaProyectos.setPreferredSize(new Dimension(250, 560));
 		pnlVentanaProyectos.setMinimumSize(new Dimension(185, 1800));
 		
-		
-		
-		pnlUsuarios = new JPanel();
-		pnlUsuarios.setPreferredSize(new Dimension(300, 300));
-		pnlUsuarios.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Usuarios", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
-		GridBagConstraints gbc_pnlUsuarios = new GridBagConstraints();
-		gbc_pnlUsuarios.gridheight = 2;
-		gbc_pnlUsuarios.gridwidth = 2;
-		gbc_pnlUsuarios.insets = new Insets(0, 0, 5, 5);
-		gbc_pnlUsuarios.fill = GridBagConstraints.BOTH;
-		gbc_pnlUsuarios.gridx = 6;
-		gbc_pnlUsuarios.gridy = 4;
-		frame.getContentPane().add(pnlUsuarios, gbc_pnlUsuarios);
-		
-		pnlVentanaUsuarios = new VentanaUsuarios(hc);
-		pnlVentanaUsuarios.setPreferredSize(new Dimension(300, 230));
-		pnlVentanaUsuarios.setMinimumSize(new Dimension(300, 250));
-		pnlUsuarios.add(pnlVentanaUsuarios);
-		
 		pnlEnviarMensaje = new JPanel();
 		pnlEnviarMensaje.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Enviar Mensaje", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		GridBagConstraints gbc_pnlEnviarMensaje = new GridBagConstraints();
@@ -238,12 +219,33 @@ public class MainFrame{
 		pnlVentanaEnviarMensaje = new VentanaMensaje();
 		pnlVentanaEnviarMensaje.setMinimumSize(new Dimension(300, 300));
 		pnlEnviarMensaje.add(pnlVentanaEnviarMensaje);
+		
+		
+		
+		pnlUsuarios = new JPanel();
+		pnlUsuarios.setPreferredSize(new Dimension(300, 300));
+		pnlUsuarios.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Usuarios", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
+		GridBagConstraints gbc_pnlUsuarios = new GridBagConstraints();
+		gbc_pnlUsuarios.gridheight = 2;
+		gbc_pnlUsuarios.gridwidth = 2;
+		gbc_pnlUsuarios.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlUsuarios.fill = GridBagConstraints.BOTH;
+		gbc_pnlUsuarios.gridx = 6;
+		gbc_pnlUsuarios.gridy = 4;
+		frame.getContentPane().add(pnlUsuarios, gbc_pnlUsuarios);
+		
+		pnlVentanaUsuarios = new VentanaUsuarios(hc, (VentanaMensaje) pnlVentanaEnviarMensaje);
+		pnlVentanaUsuarios.setPreferredSize(new Dimension(300, 230));
+		pnlVentanaUsuarios.setMinimumSize(new Dimension(300, 250));
+		pnlUsuarios.add(pnlVentanaUsuarios);
+		
+		
 	}
 
 	private class BtnModificarDatosPersonalesMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			CrearModificarUsuario newFrame = new CrearModificarUsuario(logged);
+			CrearModificarUsuario newFrame = new CrearModificarUsuario(logged, false, hc, (VentanaUsuarios) pnlVentanaUsuarios);
 		}
 	}
 }

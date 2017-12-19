@@ -23,6 +23,9 @@ public class Usuario {
 		this.ultimoAcceso=ultimoAcceso;
 	}
 	
+	public Usuario() {
+	}
+
 	public String getNick() {
 		return nick;
 	}

@@ -19,22 +19,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class VentanaUsuarios extends JPanel {
 	
 	private JFrame frame;
+	private VentanaUsuarios vu;
 	private JScrollPane scrollPane;
 	private JList lstUsuarios;
 	private JButton btnAñadirUsuario;
 	private JButton btnEliminarUsuario;
 
 	private Hardcode hc;
+	private VentanaMensaje pnlMensaje;
 	
 	/**
 	 * Create the panel.
+	 * @param pnlVentanaProyectos 
 	 */
-	public VentanaUsuarios(Hardcode hc) {
+	public VentanaUsuarios(Hardcode hc, VentanaMensaje pnlVentanaEnviarMensaje) {
+		
+		this.vu = this;
 		this.hc = hc;
+		this.pnlMensaje = pnlVentanaEnviarMensaje;
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0};
@@ -64,6 +73,7 @@ public class VentanaUsuarios extends JPanel {
 		add(btnAñadirUsuario, gbc_btnAñadirUsuario);
 		
 		btnEliminarUsuario = new JButton("Eliminar usuario");
+		btnEliminarUsuario.addActionListener(new BtnEliminarUsuarioActionListener());
 		GridBagConstraints gbc_btnEliminarUsuario = new GridBagConstraints();
 		gbc_btnEliminarUsuario.gridwidth = 2;
 		gbc_btnEliminarUsuario.gridx = 2;
@@ -76,13 +86,58 @@ public class VentanaUsuarios extends JPanel {
 	private class BtnAñadirUsuarioMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			CrearModificarUsuario newFrame = new CrearModificarUsuario();
+			Usuario nuevo = new Usuario();
+			CrearModificarUsuario newFrame = new CrearModificarUsuario(nuevo, true, hc, vu);
+		}
+	}
+	
+	private class LstUsuariosListSelectionListener implements ListSelectionListener {
+		public void valueChanged(ListSelectionEvent e) {
+			pnlMensaje.setDestinatario(String.valueOf(lstUsuarios.getSelectedValue()));
+		}
+	}
+	
+	private class LstUsuariosMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			if (e.getClickCount() == 2) {
+
+				try {
+					for (int i=0; i<hc.listaUsuarios.size(); i++) {
+
+						if (lstUsuarios.getSelectedValue().equals(hc.listaUsuarios.get(i).getNombre())) {
+							Usuario seleccionado = hc.listaUsuarios.get(i);
+							CrearModificarUsuario newFrame = new CrearModificarUsuario(seleccionado, false, hc, vu);
+						}
+					}
+				}catch (Exception ex) {
+					
+				}
+				
+			}
+		}
+	}
+	private class BtnEliminarUsuarioActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				String usuario = (String) lstUsuarios.getSelectedValue();
+				for (int i=0; i<hc.listaUsuarios.size(); i++) {
+					if (usuario.equals(hc.listaUsuarios.get(i).getNombre())) {
+						hc.listaUsuarios.remove(i);
+						llenarLista();
+					}
+				}
+			}catch (Exception ex) {
+				
+			}
 		}
 	}
 	
 	public void llenarLista() {
 		DefaultListModel<String> model = new DefaultListModel<>();
 		lstUsuarios = new JList(model);
+		lstUsuarios.addMouseListener(new LstUsuariosMouseListener());
+		lstUsuarios.addListSelectionListener(new LstUsuariosListSelectionListener());
 		for (int i=0; i<hc.listaUsuarios.size(); i++) {
 			model.addElement(hc.listaUsuarios.get(i).getNombre());
 		}
