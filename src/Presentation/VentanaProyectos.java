@@ -97,9 +97,16 @@ public class VentanaProyectos extends JPanel {
 		public void valueChanged(TreeSelectionEvent e) {
 			if (!tree.isSelectionEmpty()) {
 				
+				
+				
 				String nodo = (e.getPath().getLastPathComponent()).toString();
 				for (int i=0; i<hc.listaProyectos.size(); i++) {
+					if (nodo.equals(hc.listaProyectos.get(i).getNombre())){
+						((VentanaInfo) pnlInfo).updateValues(hc.listaProyectos.get(i));
+						return;
+					}
 					for (int j=0; j<hc.listaProyectos.get(i).getTareas().size(); j++) {
+						
 						if (nodo.equals(hc.listaProyectos.get(i).getTareas().get(j).getNombre())) {
 							((VentanaInfo) pnlInfo).updateValues(hc.listaProyectos.get(i).getTareas().get(j));
 						}

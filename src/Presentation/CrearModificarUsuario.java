@@ -239,6 +239,7 @@ public class CrearModificarUsuario{
 				hc.listaUsuarios.add(usuarioActual);
 				vu.llenarLista();
 			}
+			vu.llenarLista();
 		}
 	}
 	private class BtnModificarImagenActionListener implements ActionListener {

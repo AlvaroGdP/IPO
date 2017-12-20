@@ -61,12 +61,15 @@ public class VentanaInfo extends JPanel {
 	private Tarea actual;
 	private Hardcode hc;
 	
+	private VentanaInfo thisPanel;
+	private VentanaProyectos vp;
 	/**
 	 * Create the panel.
 	 */
 	public VentanaInfo(Hardcode hc) {
 		
 		this.hc = hc;
+		this.thisPanel = this;
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{71, 182, 49, 230, 0};
@@ -290,6 +293,7 @@ public class VentanaInfo extends JPanel {
 		add(lblEspaciadora12, gbc_lblEspaciadora12);
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.addActionListener(new BtnGuardarCambiosActionListener());
 		GridBagConstraints gbc_btnGuardarCambios = new GridBagConstraints();
 		gbc_btnGuardarCambios.insets = new Insets(0, 0, 5, 0);
 		gbc_btnGuardarCambios.gridwidth = 3;
@@ -307,27 +311,9 @@ public class VentanaInfo extends JPanel {
 		tfFechaInicio.setText(actual.getFechaInicio());
 		tfFechaFin.setText(actual.getFechaFin());
 		taDescripcion.setText(actual.getDescripcion());
-		
-		switch (actual.getPrioridad()) {
-		case 0:
-			cbPrioridad.setSelectedIndex(actual.getPrioridad());
-		case 1:
-			cbPrioridad.setSelectedIndex(actual.getPrioridad());
-		case 2:
-			cbPrioridad.setSelectedIndex(actual.getPrioridad());
-		}
+		cbPrioridad.setSelectedIndex(actual.getPrioridad());
+		cbEstado.setSelectedIndex(actual.getEstado());
 		cbResponsable.setSelectedItem(actual.getResponsable().getNombre());
-		
-		switch (actual.getEstado()) {
-		case 0:
-			cbEstado.setSelectedIndex(actual.getEstado());
-		case 1:
-			cbEstado.setSelectedIndex(actual.getEstado());
-		case 2:
-			cbEstado.setSelectedIndex(actual.getEstado());
-		}
-		
-
 		DefaultListModel<String> model = new DefaultListModel<>();
 		lstEquipo = new JList(model);
 		for (int i=0; i<actual.getEquipo().size(); i++) {
@@ -345,8 +331,29 @@ public class VentanaInfo extends JPanel {
 
 	private class BtnModificarEquipoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			VentanaModificarEquipo newFrame = new VentanaModificarEquipo(actual, hc);
+			VentanaModificarEquipo newFrame = new VentanaModificarEquipo(actual, hc, thisPanel);
 			newFrame.setVisible(true);
 		}
+	}
+	private class BtnGuardarCambiosActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			actual.setNombre(tfNombre.getText());
+			actual.setFechaInicio(tfFechaInicio.getText());
+			actual.setFechaFin(tfFechaFin.getText());
+			actual.setDescripcion(taDescripcion.getText());
+			actual.setPrioridad(cbPrioridad.getSelectedIndex());
+			actual.setEstado(cbEstado.getSelectedIndex());
+			for (int i=0; i<hc.listaUsuarios.size(); i++) {
+				if (String.valueOf(cbResponsable.getSelectedItem()).equals(hc.listaUsuarios.get(i).getNombre())) {
+					actual.setResponsable(hc.listaUsuarios.get(i));
+				}
+			}
+			vp.createTree();
+			}
+			
+		}
+	
+	public void setVentanaProyectos(VentanaProyectos vp) {
+		this.vp=vp;
 	}
 }

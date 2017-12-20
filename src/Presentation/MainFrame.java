@@ -20,6 +20,8 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Window;
+
 import javax.swing.border.BevelBorder;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -28,11 +30,12 @@ import java.awt.Cursor;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class MainFrame{
+public class MainFrame extends JFrame{
 
 	private JFrame frame;
-	private JLabel lblLblhome;
 	private JLabel lblUsuario;
 	private JLabel lblUsuario_1;
 	private JLabel lblUltimoAcceso;
@@ -52,6 +55,7 @@ public class MainFrame{
 	
 	private static Hardcode hc;
 	private static Usuario logged;
+	private JButton btnHome;
 
 	/**
 	 * Launch the application.
@@ -81,14 +85,14 @@ public class MainFrame{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	void initialize() {
 		frame = new JFrame();
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		frame.setVisible(true);
 		frame.setMinimumSize(new Dimension(1300, 700));
 		frame.getContentPane().setMinimumSize(new Dimension(2147483647, 2147483647));
 		frame.setBounds(100, 100, 1300, 849);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{307, 107, 0, 0, 0, 130, 352, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 191, 352, 0, 0, 0, 0, 0, 0};
@@ -103,13 +107,14 @@ public class MainFrame{
 		gbc_lblEspaciadora.gridy = 0;
 		frame.getContentPane().add(lblEspaciadora, gbc_lblEspaciadora);
 		
-		lblLblhome = new JLabel("lblHome");
-		GridBagConstraints gbc_lblLblhome = new GridBagConstraints();
-		gbc_lblLblhome.gridheight = 2;
-		gbc_lblLblhome.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLblhome.gridx = 0;
-		gbc_lblLblhome.gridy = 1;
-		frame.getContentPane().add(lblLblhome, gbc_lblLblhome);
+		btnHome = new JButton("Home");
+		btnHome.addActionListener(new BtnHomeActionListener());
+		GridBagConstraints gbc_btnHome = new GridBagConstraints();
+		gbc_btnHome.gridheight = 2;
+		gbc_btnHome.insets = new Insets(0, 0, 5, 5);
+		gbc_btnHome.gridx = 0;
+		gbc_btnHome.gridy = 1;
+		frame.getContentPane().add(btnHome, gbc_btnHome);
 		
 		lblUsuario = new JLabel("Usuario:");
 		GridBagConstraints gbc_lblUsuario = new GridBagConstraints();
@@ -204,13 +209,14 @@ public class MainFrame{
 		pnlVentanaProyectos.setPreferredSize(new Dimension(250, 560));
 		pnlVentanaProyectos.setMinimumSize(new Dimension(185, 1800));
 		
+		((VentanaInfo) pnlVentanaInfo).setVentanaProyectos((VentanaProyectos) pnlVentanaProyectos);
+		
 		pnlEnviarMensaje = new JPanel();
 		pnlEnviarMensaje.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Enviar Mensaje", TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLUE));
 		GridBagConstraints gbc_pnlEnviarMensaje = new GridBagConstraints();
 		gbc_pnlEnviarMensaje.anchor = GridBagConstraints.SOUTH;
 		gbc_pnlEnviarMensaje.gridwidth = 2;
 		gbc_pnlEnviarMensaje.gridheight = 6;
-		gbc_pnlEnviarMensaje.insets = new Insets(0, 0, 5, 5);
 		gbc_pnlEnviarMensaje.fill = GridBagConstraints.HORIZONTAL;
 		gbc_pnlEnviarMensaje.gridx = 6;
 		gbc_pnlEnviarMensaje.gridy = 6;
@@ -228,13 +234,13 @@ public class MainFrame{
 		GridBagConstraints gbc_pnlUsuarios = new GridBagConstraints();
 		gbc_pnlUsuarios.gridheight = 2;
 		gbc_pnlUsuarios.gridwidth = 2;
-		gbc_pnlUsuarios.insets = new Insets(0, 0, 5, 5);
+		gbc_pnlUsuarios.insets = new Insets(0, 0, 5, 0);
 		gbc_pnlUsuarios.fill = GridBagConstraints.BOTH;
 		gbc_pnlUsuarios.gridx = 6;
 		gbc_pnlUsuarios.gridy = 4;
 		frame.getContentPane().add(pnlUsuarios, gbc_pnlUsuarios);
 		
-		pnlVentanaUsuarios = new VentanaUsuarios(hc, (VentanaMensaje) pnlVentanaEnviarMensaje);
+		pnlVentanaUsuarios = new VentanaUsuarios(hc, (VentanaMensaje) pnlVentanaEnviarMensaje, (VentanaProyectos) pnlVentanaProyectos);
 		pnlVentanaUsuarios.setPreferredSize(new Dimension(300, 230));
 		pnlVentanaUsuarios.setMinimumSize(new Dimension(300, 250));
 		pnlUsuarios.add(pnlVentanaUsuarios);
@@ -246,6 +252,12 @@ public class MainFrame{
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			CrearModificarUsuario newFrame = new CrearModificarUsuario(logged, false, hc, (VentanaUsuarios) pnlVentanaUsuarios);
+		}
+	}
+	private class BtnHomeActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Login newLogin = new Login();
+			frame.dispose();
 		}
 	}
 }
