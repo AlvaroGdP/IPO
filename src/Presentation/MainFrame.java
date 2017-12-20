@@ -240,7 +240,7 @@ public class MainFrame extends JFrame{
 		gbc_pnlUsuarios.gridy = 4;
 		frame.getContentPane().add(pnlUsuarios, gbc_pnlUsuarios);
 		
-		pnlVentanaUsuarios = new VentanaUsuarios(hc, (VentanaMensaje) pnlVentanaEnviarMensaje, (VentanaProyectos) pnlVentanaProyectos);
+		pnlVentanaUsuarios = new VentanaUsuarios(hc, (VentanaMensaje) pnlVentanaEnviarMensaje);
 		pnlVentanaUsuarios.setPreferredSize(new Dimension(300, 230));
 		pnlVentanaUsuarios.setMinimumSize(new Dimension(300, 250));
 		pnlUsuarios.add(pnlVentanaUsuarios);
