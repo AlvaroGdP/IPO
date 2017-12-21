@@ -122,7 +122,7 @@ public class VentanaProyectos extends JPanel {
 		tree = new JTree();
 		tree.addTreeSelectionListener(new TreeTreeSelectionListener());
 		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("IPO") {
+			new DefaultMutableTreeNode("Proyectos") {
 				{
 					DefaultMutableTreeNode node_1;
 					for (int i=0; i<hc.listaProyectos.size();i++) {

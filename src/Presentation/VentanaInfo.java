@@ -331,26 +331,33 @@ public class VentanaInfo extends JPanel {
 
 	private class BtnModificarEquipoActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			VentanaModificarEquipo newFrame = new VentanaModificarEquipo(actual, hc, thisPanel);
-			newFrame.setVisible(true);
+			try {
+
+				VentanaModificarEquipo newFrame = new VentanaModificarEquipo(actual, hc, thisPanel);
+				newFrame.setVisible(true);
+			}catch (Exception ex) {	
+			}
 		}
 	}
 	private class BtnGuardarCambiosActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			actual.setNombre(tfNombre.getText());
-			actual.setFechaInicio(tfFechaInicio.getText());
-			actual.setFechaFin(tfFechaFin.getText());
-			actual.setDescripcion(taDescripcion.getText());
-			actual.setPrioridad(cbPrioridad.getSelectedIndex());
-			actual.setEstado(cbEstado.getSelectedIndex());
-			for (int i=0; i<hc.listaUsuarios.size(); i++) {
-				if (String.valueOf(cbResponsable.getSelectedItem()).equals(hc.listaUsuarios.get(i).getNombre())) {
-					actual.setResponsable(hc.listaUsuarios.get(i));
+			try {
+				actual.setNombre(tfNombre.getText());
+				actual.setFechaInicio(tfFechaInicio.getText());
+				actual.setFechaFin(tfFechaFin.getText());
+				actual.setDescripcion(taDescripcion.getText());
+				actual.setPrioridad(cbPrioridad.getSelectedIndex());
+				actual.setEstado(cbEstado.getSelectedIndex());
+				for (int i=0; i<hc.listaUsuarios.size(); i++) {
+					if (String.valueOf(cbResponsable.getSelectedItem()).equals(hc.listaUsuarios.get(i).getNombre())) {
+						actual.setResponsable(hc.listaUsuarios.get(i));
+					}
 				}
-			}
-			vp.createTree();
+				vp.createTree();
+			}catch (Exception excep){
 			}
 			
+		}
 		}
 	
 	public void setVentanaProyectos(VentanaProyectos vp) {

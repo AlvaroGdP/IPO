@@ -51,13 +51,14 @@ public class VentanaModificarEquipo extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaModificarEquipo(Tarea tarea, Hardcode hc, VentanaInfo parent) {
+		setMinimumSize(new Dimension(500, 300));
 		
 		
 		this.tarea=tarea;
 		this.hc=hc;
 		this.parent=parent;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 481, 301);
+		setBounds(100, 100, 499, 299);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
