@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.ImageIcon;
 
 public class VentanaUsuarios extends JPanel {
 	
@@ -28,7 +29,7 @@ public class VentanaUsuarios extends JPanel {
 	private VentanaUsuarios vu;
 	private JScrollPane scrollPane;
 	private JList lstUsuarios;
-	private JButton btnAÃ±adirUsuario;
+	private JButton btnAñadirUsuario;
 	private JButton btnEliminarUsuario;
 
 	private Hardcode hc;
@@ -63,16 +64,18 @@ public class VentanaUsuarios extends JPanel {
 		llenarLista();
 		
 		
-		btnAÃ±adirUsuario = new JButton("AÃ±adir Usuario");
-		btnAÃ±adirUsuario.addMouseListener(new BtnAÃ±adirUsuarioMouseListener());
-		GridBagConstraints gbc_btnAÃ±adirUsuario = new GridBagConstraints();
-		gbc_btnAÃ±adirUsuario.gridwidth = 2;
-		gbc_btnAÃ±adirUsuario.insets = new Insets(0, 0, 0, 5);
-		gbc_btnAÃ±adirUsuario.gridx = 0;
-		gbc_btnAÃ±adirUsuario.gridy = 1;
-		add(btnAÃ±adirUsuario, gbc_btnAÃ±adirUsuario);
+		btnAñadirUsuario = new JButton("A\u00F1adir ");
+		btnAñadirUsuario.setIcon(new ImageIcon(VentanaUsuarios.class.getResource("/Presentation/nuevo-usuario.png")));
+		btnAñadirUsuario.addMouseListener(new BtnAñadirUsuarioMouseListener());
+		GridBagConstraints gbc_btnAñadirUsuario = new GridBagConstraints();
+		gbc_btnAñadirUsuario.gridwidth = 2;
+		gbc_btnAñadirUsuario.insets = new Insets(0, 0, 0, 5);
+		gbc_btnAñadirUsuario.gridx = 0;
+		gbc_btnAñadirUsuario.gridy = 1;
+		add(btnAñadirUsuario, gbc_btnAñadirUsuario);
 		
-		btnEliminarUsuario = new JButton("Eliminar usuario");
+		btnEliminarUsuario = new JButton("Eliminar ");
+		btnEliminarUsuario.setIcon(new ImageIcon(VentanaUsuarios.class.getResource("/Presentation/borrar-usuario.png")));
 		btnEliminarUsuario.addActionListener(new BtnEliminarUsuarioActionListener());
 		GridBagConstraints gbc_btnEliminarUsuario = new GridBagConstraints();
 		gbc_btnEliminarUsuario.gridwidth = 2;
@@ -83,7 +86,7 @@ public class VentanaUsuarios extends JPanel {
 	}
 
 	
-	private class BtnAÃ±adirUsuarioMouseListener extends MouseAdapter {
+	private class BtnAñadirUsuarioMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			Usuario nuevo = new Usuario();
@@ -120,6 +123,7 @@ public class VentanaUsuarios extends JPanel {
 	private class BtnEliminarUsuarioActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			try {
+				Confirmacion confirmacion = new Confirmacion();
 				String usuario = (String) lstUsuarios.getSelectedValue();
 				for (int i=0; i<hc.listaUsuarios.size(); i++) {
 					if (usuario.equals(hc.listaUsuarios.get(i).getNombre())) {

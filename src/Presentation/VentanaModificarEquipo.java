@@ -26,6 +26,8 @@ import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class VentanaModificarEquipo extends JFrame {
 
@@ -51,6 +53,7 @@ public class VentanaModificarEquipo extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaModificarEquipo(Tarea tarea, Hardcode hc, VentanaInfo parent) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaModificarEquipo.class.getResource("/Presentation/equipo.png")));
 		setMinimumSize(new Dimension(500, 300));
 		
 		
@@ -95,7 +98,8 @@ public class VentanaModificarEquipo extends JFrame {
 		lblListaDeUsuarios.setForeground(Color.BLUE);
 		scrollPane_1.setColumnHeaderView(lblListaDeUsuarios);
 		
-		button = new JButton("--->");
+		button = new JButton("");
+		button.setIcon(new ImageIcon(VentanaModificarEquipo.class.getResource("/Presentation/derecha.png")));
 		button.addActionListener(new ButtonActionListener());
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 5, 5);
@@ -103,7 +107,8 @@ public class VentanaModificarEquipo extends JFrame {
 		gbc_button.gridy = 1;
 		contentPane.add(button, gbc_button);
 		
-		button_1 = new JButton("<---");
+		button_1 = new JButton("");
+		button_1.setIcon(new ImageIcon(VentanaModificarEquipo.class.getResource("/Presentation/izquierda.png")));
 		button_1.addActionListener(new Button_1ActionListener());
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 5, 5);
@@ -112,6 +117,7 @@ public class VentanaModificarEquipo extends JFrame {
 		contentPane.add(button_1, gbc_button_1);
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.setIcon(new ImageIcon(VentanaModificarEquipo.class.getResource("/Presentation/guardar.png")));
 		btnGuardarCambios.addActionListener(new BtnGuardarCambiosActionListener());
 		GridBagConstraints gbc_btnGuardarCambios = new GridBagConstraints();
 		gbc_btnGuardarCambios.gridx = 2;

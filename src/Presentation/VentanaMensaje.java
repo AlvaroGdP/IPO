@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class VentanaMensaje extends JPanel {
 	private JScrollPane scrollPane;
@@ -45,10 +46,11 @@ public class VentanaMensaje extends JPanel {
 		
 		taMensaje = new JTextArea();
 		taMensaje.setMinimumSize(new Dimension(300, 300));
-		taMensaje.setText("Escribe aquÃ­ tu mensaje");
+		taMensaje.setText("Escribe aquí tu mensaje");
 		scrollPane.setViewportView(taMensaje);
 		
 		btnEnviarMensaje = new JButton("Enviar Mensaje");
+		btnEnviarMensaje.setIcon(new ImageIcon(VentanaMensaje.class.getResource("/Presentation/enviar mensaje.png")));
 		btnEnviarMensaje.addActionListener(new BtnEnviarMensajeActionListener());
 		GridBagConstraints gbc_btnEnviarMensaje = new GridBagConstraints();
 		gbc_btnEnviarMensaje.anchor = GridBagConstraints.EAST;

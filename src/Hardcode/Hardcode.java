@@ -8,7 +8,7 @@ import Domain.Usuario;
 
 public class Hardcode {
 
-	public ArrayList<Usuario> listaUsuarios;
+	public  ArrayList<Usuario> listaUsuarios;
 	
 	public ArrayList<Usuario> equipotarea1;
 	public ArrayList<Usuario> equipotarea2;
@@ -33,7 +33,7 @@ public class Hardcode {
 	public void initialize() {
 		
 		//Crear Usuarios
-		Usuario user1 = new Usuario("脕lvaro Guerrero del Pozo", "Alvaro", "ipo1", "123456789", "alvaroguerrero@email.com", "C/ Verdadera 7", null, "20/10/2017");
+		Usuario user1 = new Usuario("Alvaro Guerrero del Pozo", "Alvaro", "ipo1", "123456789", "alvaroguerrero@email.com", "C/ Verdadera 7", null, "20/10/2017");
 		Usuario user2 = new Usuario("Manuel Hurtado Lillo", "Manuel", "ipo2", "987654321","manuelhurtado@email.com", "C/ No tanto 12", null, "12/11/2017");
 		Usuario user3 = new Usuario("Ana Isabel Molina", "Ana", "ipo3", "112233445","anaisabel@email.com", "C/ ESI 27", null, "16/12/2017");
 		Usuario user4 = new Usuario("Fulanito de Tal", "Fulanito", "ipo4", "135792468","fulanito@email.com", "C/ Original 10", null, "8/9/2017");
@@ -91,13 +91,13 @@ public class Hardcode {
 		
 		//Crear Tareas
 		Tarea tarea1 = new Tarea("Hito1", user1, "10/10/2017", "11/11/2017", 2, 2, "Tarea cerada para la parte central el Hito 1", equipotarea1);
-		Tarea tarea2 = new Tarea("Revisi贸n Hito1", user3, "30/10/2017", "1/11/2017", 1, 0, "Correci贸n del Hito 1", equipotarea2);
+		Tarea tarea2 = new Tarea("Revisi髇 Hito1", user3, "30/10/2017", "1/11/2017", 1, 0, "Correci髇 del Hito 1", equipotarea2);
 		Tarea tarea3 = new Tarea("Hito1 Memoria", user2, "2/11/2017", "20/11/2017", 2, 1, "Crear Memoria del Hito1 ", equipotarea1);
 		Tarea tarea4 = new Tarea("Entrega Memoria Hito1", user2, "21/11/2017", "22/11/2017", 0, 1, "Entregar Memoria del Hito 1", equipotarea3);
 		
 
 		Tarea tarea21 = new Tarea("Hito2", user1, "25/11/2017", "10/12/2017", 2, 0, "Segunda entrega ipo2: Prototipo", equipotarea1);
-		Tarea tarea22 = new Tarea("Revisi贸n Hito2", user3, "10/12/2017", "12/12/2017", 1, 2, "Correci贸n Hito 2", equipotarea2);
+		Tarea tarea22 = new Tarea("Revisi髇 Hito2", user3, "10/12/2017", "12/12/2017", 1, 2, "Correci髇 Hito 2", equipotarea2);
 		Tarea tarea23 = new Tarea("Hito2 Memoria", user2, "13/12/2017", "22/12/2017", 2, 1, "Crear Memoria Hito2 ", equipotarea1);
 		Tarea tarea24 = new Tarea("Entrega Memoria Hito2", user2, "25/11/2017", "27/12/2017", 0, 2, "Entregar Memoria Hito2", equipotarea3);
 		
@@ -124,6 +124,9 @@ public class Hardcode {
 		listaProyectos.add(proyecto1);
 		listaProyectos.add(proyecto2);
 		
+		
 	}
+	
+	
 	
 }

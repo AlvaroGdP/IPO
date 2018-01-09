@@ -26,6 +26,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class CrearModificarUsuario{
 
@@ -89,6 +90,7 @@ public class CrearModificarUsuario{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(CrearModificarUsuario.class.getResource("/Presentation/usuarios.png")));
 		frame.setResizable(false);
 		frame.setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		frame.setVisible(true);
@@ -144,7 +146,7 @@ public class CrearModificarUsuario{
 		frame.getContentPane().add(tfNombre, gbc_tfNombre);
 		tfNombre.setColumns(10);
 		
-		lblTelfono = new JLabel("Teléfono");
+		lblTelfono = new JLabel("Tel\u00E9fono");
 		GridBagConstraints gbc_lblTelfono = new GridBagConstraints();
 		gbc_lblTelfono.anchor = GridBagConstraints.EAST;
 		gbc_lblTelfono.insets = new Insets(0, 0, 5, 5);
@@ -178,7 +180,7 @@ public class CrearModificarUsuario{
 		frame.getContentPane().add(tfCorreo, gbc_tfCorreo);
 		tfCorreo.setColumns(10);
 		
-		lblDireccion = new JLabel("Dirección");
+		lblDireccion = new JLabel("Direcci\u00F3n");
 		GridBagConstraints gbc_lblDireccion = new GridBagConstraints();
 		gbc_lblDireccion.anchor = GridBagConstraints.EAST;
 		gbc_lblDireccion.insets = new Insets(0, 0, 5, 5);
@@ -196,6 +198,7 @@ public class CrearModificarUsuario{
 		tfDireccion.setColumns(10);
 		
 		btnModificarImagen = new JButton("Modificar Imagen");
+		btnModificarImagen.setIcon(new ImageIcon(CrearModificarUsuario.class.getResource("/Presentation/modificar imagen.png")));
 		btnModificarImagen.addActionListener(new BtnModificarImagenActionListener());
 		GridBagConstraints gbc_btnModificarImagen = new GridBagConstraints();
 		gbc_btnModificarImagen.insets = new Insets(0, 0, 0, 5);
@@ -204,6 +207,7 @@ public class CrearModificarUsuario{
 		frame.getContentPane().add(btnModificarImagen, gbc_btnModificarImagen);
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.setIcon(new ImageIcon(CrearModificarUsuario.class.getResource("/Presentation/guardar.png")));
 		btnGuardarCambios.addActionListener(new BtnGuardarCambiosActionListener());
 		GridBagConstraints gbc_btnGuardarCambios = new GridBagConstraints();
 		gbc_btnGuardarCambios.insets = new Insets(0, 0, 0, 5);
@@ -240,6 +244,7 @@ public class CrearModificarUsuario{
 				vu.llenarLista();
 			}
 			vu.llenarLista();
+			frame.dispose();
 		}
 	}
 	private class BtnModificarImagenActionListener implements ActionListener {

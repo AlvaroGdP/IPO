@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JScrollPane;
@@ -24,6 +25,7 @@ import Domain.Tarea;
 import Hardcode.Hardcode;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 public class VentanaInfo extends JPanel {
 	private JLabel lblNombre;
@@ -111,7 +113,7 @@ public class VentanaInfo extends JPanel {
 		gbc_scrollPane.gridy = 2;
 		add(scrollPane, gbc_scrollPane);
 		
-		lblDescripcion = new JLabel("Descripción");
+		lblDescripcion = new JLabel("Descripcion");
 		lblDescripcion.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		lblDescripcion.setForeground(Color.BLUE);
 		scrollPane.setColumnHeaderView(lblDescripcion);
@@ -247,7 +249,7 @@ public class VentanaInfo extends JPanel {
 		add(lblEstado, gbc_lblEstado);
 		
 		cbEstado = new JComboBox();
-		cbEstado.setModel(new DefaultComboBoxModel(new String[] {"Activo", "Tardío", "Completo"}));
+		cbEstado.setModel(new DefaultComboBoxModel(new String[] {"Activo", "Tardio", "Completo"}));
 		GridBagConstraints gbc_cbEstado = new GridBagConstraints();
 		gbc_cbEstado.insets = new Insets(0, 0, 5, 5);
 		gbc_cbEstado.fill = GridBagConstraints.HORIZONTAL;
@@ -293,6 +295,7 @@ public class VentanaInfo extends JPanel {
 		add(lblEspaciadora12, gbc_lblEspaciadora12);
 		
 		btnGuardarCambios = new JButton("Guardar Cambios");
+		btnGuardarCambios.setIcon(new ImageIcon(VentanaInfo.class.getResource("/Presentation/guardar.png")));
 		btnGuardarCambios.addActionListener(new BtnGuardarCambiosActionListener());
 		GridBagConstraints gbc_btnGuardarCambios = new GridBagConstraints();
 		gbc_btnGuardarCambios.insets = new Insets(0, 0, 5, 0);
@@ -354,6 +357,7 @@ public class VentanaInfo extends JPanel {
 					}
 				}
 				vp.createTree();
+				
 			}catch (Exception excep){
 			}
 			

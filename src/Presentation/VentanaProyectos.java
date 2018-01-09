@@ -11,15 +11,20 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.awt.event.ActionEvent;
 
 import Domain.Proyecto;
+import Domain.Tarea;
+import Domain.Usuario;
 import Hardcode.Hardcode;
 
 import Presentation.VentanaInfo;
 
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.event.TreeModelListener;
 import javax.swing.event.TreeSelectionEvent;
+import javax.swing.ImageIcon;
 
 public class VentanaProyectos extends JPanel {
 	private JButton btnAnadirProyecto;
@@ -55,7 +60,9 @@ public class VentanaProyectos extends JPanel {
 		
 		createTree();
 		
-		btnAnadirProyecto = new JButton("Añadir Proyecto");
+		btnAnadirProyecto = new JButton("Proyecto");
+		btnAnadirProyecto.setIcon(new ImageIcon(VentanaProyectos.class.getResource("/Presentation/carpeta.png")));
+		btnAnadirProyecto.addActionListener(new BtnAnadirProyectoActionListener());
 		GridBagConstraints gbc_btnAnadirProyecto = new GridBagConstraints();
 		gbc_btnAnadirProyecto.gridwidth = 2;
 		gbc_btnAnadirProyecto.insets = new Insets(0, 0, 5, 5);
@@ -63,7 +70,8 @@ public class VentanaProyectos extends JPanel {
 		gbc_btnAnadirProyecto.gridy = 1;
 		add(btnAnadirProyecto, gbc_btnAnadirProyecto);
 		
-		btnAnadirTatea = new JButton("Añadir Tarea");
+		btnAnadirTatea = new JButton("Tarea");
+		btnAnadirTatea.setIcon(new ImageIcon(VentanaProyectos.class.getResource("/Presentation/tarea.png")));
 		btnAnadirTatea.addActionListener(new BtnAnadirTareaActionListener());
 		GridBagConstraints gbc_btnAnadirTatea = new GridBagConstraints();
 		gbc_btnAnadirTatea.anchor = GridBagConstraints.WEST;
@@ -74,6 +82,8 @@ public class VentanaProyectos extends JPanel {
 		add(btnAnadirTatea, gbc_btnAnadirTatea);
 		
 		btnBorrar = new JButton("Borrar");
+		btnBorrar.setIcon(new ImageIcon(VentanaProyectos.class.getResource("/Presentation/cubo-de-basura.png")));
+		btnBorrar.addActionListener(new BtnBorrarActionListener());
 		GridBagConstraints gbc_btnBorrar = new GridBagConstraints();
 		gbc_btnBorrar.gridwidth = 5;
 		gbc_btnBorrar.insets = new Insets(0, 0, 0, 5);
@@ -90,6 +100,25 @@ public class VentanaProyectos extends JPanel {
 	
 	private class BtnAnadirTareaActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			
+			String padre = (tree.getLastSelectedPathComponent()).toString();
+			ArrayList<Usuario> equipotareanuevo = new ArrayList();
+			Tarea nueva = new Tarea("Nueva Tarea", hc.listaUsuarios.get(1), Integer.toString(Calendar.DATE), " ", 2, 2, " ", equipotareanuevo);
+			for (int i=0; i<hc.listaProyectos.size(); i++) {
+				if (padre.equals(hc.listaProyectos.get(i).getNombre())){
+					hc.listaProyectos.get(i).getTareas().add(nueva);
+					
+				}
+			}
+			
+			
+			DefaultMutableTreeNode nodo = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+			DefaultTreeModel mdl= (DefaultTreeModel)tree.getModel();
+			DefaultMutableTreeNode child = new DefaultMutableTreeNode("Nueva tarea");
+			
+			mdl.insertNodeInto(child, nodo, nodo.getChildCount());
+			
+			
 		}
 	}
 	
@@ -116,13 +145,55 @@ public class VentanaProyectos extends JPanel {
 			}
 		}
 	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private class BtnAnadirProyectoActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+		
+			ArrayList<Usuario> equipoproyectonuevo = new ArrayList();
+			ArrayList<Tarea> listaTareasnueva = new ArrayList();
+			Tarea nueva = new Tarea("Nueva Tarea", hc.listaUsuarios.get(1), Integer.toString(Calendar.DATE), " ", 2, 2, " ", equipoproyectonuevo);
+			listaTareasnueva.add(nueva);
+			Proyecto nuevo = new Proyecto("Nuevo Proyecto", hc.listaUsuarios.get(0), Integer.toString(Calendar.DATE), " ", 2, 2, " ", equipoproyectonuevo, listaTareasnueva);
+			
+			
+			hc.listaProyectos.add(nuevo);
+			
+			DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
+			DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+
+			DefaultMutableTreeNode newProject = new DefaultMutableTreeNode("Nuevo Proyecto");
+
+			DefaultMutableTreeNode child = new DefaultMutableTreeNode("Nueva tarea");
+			newProject.add(child);
+			
+			model.insertNodeInto(newProject, root, root.getChildCount());
+			
+			
+		}
+	}	
+	private class BtnBorrarActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			
+			DefaultMutableTreeNode nodo = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
+			DefaultTreeModel mdl= (DefaultTreeModel)tree.getModel();
+			
+			
+			Confirmacion confirmacion = new Confirmacion();
+				
+			mdl.removeNodeFromParent(nodo);
+			
+			
+		}
+	}
+	
+	
+	
 	
 	
 	public void createTree() {
 		tree = new JTree();
 		tree.addTreeSelectionListener(new TreeTreeSelectionListener());
-		tree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Proyectos") {
+		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Proyectos") {
 				{
 					DefaultMutableTreeNode node_1;
 					for (int i=0; i<hc.listaProyectos.size();i++) {

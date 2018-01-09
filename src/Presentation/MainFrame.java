@@ -32,6 +32,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame{
 
@@ -87,6 +89,7 @@ public class MainFrame extends JFrame{
 	 */
 	void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource("/Presentation/main frame.png")));
 		frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		frame.setVisible(true);
 		frame.setMinimumSize(new Dimension(1300, 700));
@@ -107,7 +110,8 @@ public class MainFrame extends JFrame{
 		gbc_lblEspaciadora.gridy = 0;
 		frame.getContentPane().add(lblEspaciadora, gbc_lblEspaciadora);
 		
-		btnHome = new JButton("Home");
+		btnHome = new JButton("");
+		btnHome.setIcon(new ImageIcon(MainFrame.class.getResource("/Presentation/casa.png")));
 		btnHome.addActionListener(new BtnHomeActionListener());
 		GridBagConstraints gbc_btnHome = new GridBagConstraints();
 		gbc_btnHome.gridheight = 2;
@@ -147,7 +151,7 @@ public class MainFrame extends JFrame{
 		gbc_btnModificarDatosPersonales.gridy = 1;
 		frame.getContentPane().add(btnModificarDatosPersonales, gbc_btnModificarDatosPersonales);
 		
-		lblUltimoAcceso = new JLabel("Último Acceso:");
+		lblUltimoAcceso = new JLabel("\u00D9ltimo Acceso:");
 		GridBagConstraints gbc_lblUltimoAcceso = new GridBagConstraints();
 		gbc_lblUltimoAcceso.anchor = GridBagConstraints.WEST;
 		gbc_lblUltimoAcceso.insets = new Insets(0, 0, 5, 5);
@@ -261,3 +265,4 @@ public class MainFrame extends JFrame{
 		}
 	}
 }
+

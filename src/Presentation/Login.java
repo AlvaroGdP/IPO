@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPasswordField;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class Login {
 
@@ -60,6 +62,7 @@ public class Login {
 		
 
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/Presentation/marcador-de-posicion.png")));
 		frame.setVisible(true);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +72,7 @@ public class Login {
 		lblUsuario.setBounds(183, 74, 46, 35);
 		frame.getContentPane().add(lblUsuario);
 		
-		lblContrasea = new JLabel("ContraseÃ±a");
+		lblContrasea = new JLabel("Contraseña");
 		lblContrasea.setBounds(183, 120, 81, 26);
 		frame.getContentPane().add(lblContrasea);
 		
@@ -84,14 +87,15 @@ public class Login {
 		frame.getContentPane().add(btnConectar);
 		
 		lblLoginIncorrecto = new JLabel("");
-		lblLoginIncorrecto.setBounds(138, 154, 241, 27);
+		lblLoginIncorrecto.setBounds(183, 156, 241, 27);
 		frame.getContentPane().add(lblLoginIncorrecto);
 		
-		lblVersion = new JLabel("Version 0.1");
+		lblVersion = new JLabel("Version Final");
 		lblVersion.setBounds(241, 26, 134, 26);
 		frame.getContentPane().add(lblVersion);
 		
-		lblLogo = new JLabel("Logo");
+		lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon(Login.class.getResource("/Presentation/factura.png")));
 		lblLogo.setBounds(24, 52, 142, 163);
 		frame.getContentPane().add(lblLogo);
 		
